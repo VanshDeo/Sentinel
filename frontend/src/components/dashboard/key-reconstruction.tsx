@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { KeyRound, User, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface KeyHolder {
   id: string;
@@ -11,21 +10,32 @@ interface KeyHolder {
   submitted: boolean;
 }
 
-export function KeyReconstruction() {
+interface KeyReconstructionProps {
+  onReconstructChange?: (reconstructed: boolean) => void;
+}
+
+export function KeyReconstruction({ onReconstructChange }: KeyReconstructionProps) {
   const [holders, setHolders] = useState<KeyHolder[]>([
-    { id: "1", label: "Key holder 1", submitted: false },
-    { id: "2", label: "Key holder 2", submitted: false },
-    { id: "3", label: "Key holder 3", submitted: false },
+    { id: "1", label: "Finance Lead", submitted: true },
+    { id: "2", label: "Auditor", submitted: false },
+    { id: "3", label: "Governance Rep", submitted: false },
   ]);
+
+  const toggleHolder = (id: string) => {
+    const nextHolders = holders.map((h) => 
+      h.id === id ? { ...h, submitted: !h.submitted } : h
+    );
+    setHolders(nextHolders);
+    
+    const submittedCount = nextHolders.filter((h) => h.submitted).length;
+    const isReconstructed = submittedCount >= 2;
+    if (onReconstructChange) {
+      onReconstructChange(isReconstructed);
+    }
+  };
 
   const submittedCount = holders.filter((h) => h.submitted).length;
   const isReconstructed = submittedCount >= 2;
-
-  const toggleHolder = (id: string) => {
-    setHolders((prev) =>
-      prev.map((h) => (h.id === id ? { ...h, submitted: !h.submitted } : h))
-    );
-  };
 
   return (
     <div className="space-y-8">
@@ -79,7 +89,12 @@ export function KeyReconstruction() {
               )}
             </motion.button>
 
-            <span className="text-xs text-[#71717A]">{holder.label}</span>
+            <div className="text-center">
+              <span className="text-[10px] uppercase font-semibold block text-[#F5F5F7] tracking-wider">{holder.label}</span>
+              <span className="text-[9px] text-[#71717A] font-mono mt-0.5 block">
+                {holder.submitted ? "Share Ready" : "Awaiting Share"}
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -155,15 +170,15 @@ export function KeyReconstruction() {
         </motion.div>
 
         <div className="text-center">
-          <p className="text-sm font-medium">
+          <p className="text-xs uppercase tracking-widest font-mono font-semibold">
             {isReconstructed
               ? "Audit key reconstructed"
-              : `${submittedCount} of 2 required`}
+              : `Share Input Progress: ${submittedCount}/2`}
           </p>
-          <p className="text-xs text-[#71717A] mt-1">
+          <p className="text-[10px] text-[#71717A] mt-1">
             {isReconstructed
-              ? "Encrypted treasury data is now accessible for audit"
-              : "Click key holders above to simulate submission"}
+              ? "Decrypted transaction and policy validation database is unlocked."
+              : "Submit at least 2 shares above to reconstruct the auditor key."}
           </p>
         </div>
       </div>

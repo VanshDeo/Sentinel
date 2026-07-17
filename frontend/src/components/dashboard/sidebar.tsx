@@ -8,7 +8,10 @@ import {
   LayoutDashboard,
   ArrowLeftRight,
   ShieldCheck,
+  Building2,
   KeyRound,
+  Users,
+  Settings,
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
@@ -18,9 +21,12 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { href: "/dashboard", label: "Transactions", icon: ArrowLeftRight },
-  { href: "/dashboard/policy", label: "Policy", icon: ShieldCheck },
+  { href: "/dashboard/transactions", label: "Transactions", icon: ArrowLeftRight },
+  { href: "/dashboard/policies", label: "Policies", icon: ShieldCheck },
+  { href: "/dashboard/treasury", label: "Treasury", icon: Building2 },
   { href: "/dashboard/audit", label: "Audit", icon: KeyRound },
+  { href: "/dashboard/members", label: "Members", icon: Users },
+  { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
 export function Sidebar() {
@@ -42,7 +48,8 @@ export function Sidebar() {
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: "auto" }}
               exit={{ opacity: 0, width: 0 }}
-              className="text-sm font-semibold tracking-[0.2em] text-[#F5F5F7] overflow-hidden whitespace-nowrap"
+              className="text-xs font-semibold tracking-[0.25em] text-[#F5F5F7] overflow-hidden whitespace-nowrap uppercase"
+              style={{ fontFamily: "var(--font-display)" }}
             >
               SENTINEL
             </motion.span>
@@ -61,7 +68,7 @@ export function Sidebar() {
               key={item.label}
               href={item.href}
               className={cn(
-                "relative flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-colors duration-200",
+                "relative flex items-center gap-3 px-3 py-2.5 rounded-md text-xs uppercase tracking-widest transition-colors duration-200",
                 isActive
                   ? "text-[#F5F5F7]"
                   : "text-[#71717A] hover:text-[#F5F5F7]"
@@ -84,7 +91,7 @@ export function Sidebar() {
                     initial={{ opacity: 0, width: 0 }}
                     animate={{ opacity: 1, width: "auto" }}
                     exit={{ opacity: 0, width: 0 }}
-                    className="relative z-10 overflow-hidden whitespace-nowrap"
+                    className="relative z-10 overflow-hidden whitespace-nowrap font-medium"
                   >
                     {item.label}
                   </motion.span>

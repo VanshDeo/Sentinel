@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { spaceGrotesk, jetbrainsMono, playfairDisplay } from "@/lib/fonts";
 import { LenisProvider } from "@/components/lenis-provider";
+import { Providers } from "@/components/providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,9 +21,11 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} antialiased`}
     >
       <body className="min-h-screen bg-[#0A0A0B] text-[#F5F5F7]">
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        <Providers>
+          <LenisProvider>
+            {children}
+          </LenisProvider>
+        </Providers>
       </body>
     </html>
   );

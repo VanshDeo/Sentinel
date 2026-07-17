@@ -25,22 +25,6 @@ function HeroSection() {
     >
       <CircuitGrid />
 
-      {/* Organic shimmer dot field — layered behind circuit grid */}
-      <DottedGlowBackground
-        className="pointer-events-none mask-radial-to-90% mask-radial-at-center"
-        opacity={0.6}
-        gap={18}
-        radius={1.2}
-        color="rgba(139, 143, 232, 0.4)"
-        glowColor="rgba(108, 111, 224, 0.7)"
-        darkColor="rgba(139, 143, 232, 0.5)"
-        darkGlowColor="rgba(108, 111, 224, 0.85)"
-        backgroundOpacity={0}
-        speedMin={0.2}
-        speedMax={0.8}
-        speedScale={0.7}
-      />
-
       <div className="relative z-10 flex flex-col items-center gap-8 max-w-3xl text-center">
         {/* Logo mark lockup */}
         <SentinelLogo size={160} animate />
@@ -333,22 +317,6 @@ function ComparisonSection() {
 function CTAFooter() {
   return (
     <footer id="footer" className="relative py-32 px-6 overflow-hidden">
-      {/* Subtle dot field echo from hero */}
-      <DottedGlowBackground
-        className="pointer-events-none mask-radial-to-90% mask-radial-at-center"
-        opacity={0.3}
-        gap={24}
-        radius={1}
-        color="rgba(139, 143, 232, 0.3)"
-        glowColor="rgba(108, 111, 224, 0.5)"
-        darkColor="rgba(139, 143, 232, 0.35)"
-        darkGlowColor="rgba(108, 111, 224, 0.6)"
-        backgroundOpacity={0}
-        speedMin={0.15}
-        speedMax={0.5}
-        speedScale={0.5}
-      />
-
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         {/* Watermark logo */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
