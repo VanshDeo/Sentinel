@@ -101,7 +101,7 @@ export default function AuditPage() {
         className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[rgba(245,245,247,0.04)] pb-6"
       >
         <div>
-          <h1 className="text-2xl font-normal tracking-wider uppercase font-display text-[#F5F5F7]">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
             Audit Command
           </h1>
           <p className="text-sm text-[#71717A] mt-1 font-mono">
@@ -179,7 +179,7 @@ export default function AuditPage() {
                         <td className="p-4 font-mono font-semibold text-[#8B8FE8]">{log.id}</td>
                         <td className="p-4 text-[#71717A]">{log.timestamp}</td>
                         <td className="p-4 font-mono">{log.recipient}</td>
-                        <td className="p-4 font-semibold font-display tracking-wider text-[#F5F5F7]">{log.amount}</td>
+                        <td className="p-4 font-semibold font-mono text-[#F5F5F7]">{log.amount}</td>
                         <td className="p-4">
                           <span className="px-2 py-0.5 rounded border text-[9px] font-semibold uppercase tracking-wider text-[#F5F5F7]/80 bg-white/5 border-[rgba(245,245,247,0.06)] flex items-center gap-1 w-max">
                             {log.policyCheck === "Passed" ? (

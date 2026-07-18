@@ -56,7 +56,7 @@ export default function DashboardPage() {
         className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[rgba(245,245,247,0.04)] pb-6"
       >
         <div>
-          <h1 className="text-3xl font-normal tracking-wide uppercase font-display text-[#F5F5F7]">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
             Good Morning, Soujanya
           </h1>
           <p className="text-sm text-[#71717A] mt-1 font-mono">
@@ -108,22 +108,22 @@ export default function DashboardPage() {
         )}
       </AnimatePresence>
 
-      {/* 2. Primary KPI Cards */}
+      {/* 2. Key Metrics Grid */}
       <motion.div 
         variants={itemVariants}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
       >
         {/* Card 1: Encrypted Treasury */}
         <motion.div 
           whileHover={{ y: -2, borderColor: "rgba(139,143,232,0.2)" }}
-          className="p-6 rounded-2xl bg-[#111113]/40 border border-[rgba(245,245,247,0.06)] flex flex-col justify-between h-36 backdrop-blur-md relative overflow-hidden"
+          className="p-6 rounded-2xl bg-[#111113]/40 border border-[rgba(245,245,247,0.06)] flex flex-col justify-between h-36 backdrop-blur-md"
         >
           <div className="flex items-center justify-between text-[#71717A]">
             <span className="text-[10px] tracking-widest uppercase font-mono">Encrypted Treasury</span>
             <Building className="w-4 h-4 text-[#8B8FE8]/60" />
           </div>
           <div>
-            <h2 className="text-2xl font-normal tracking-wider font-display min-h-[32px]">
+            <h2 className="text-2xl font-semibold font-mono tracking-tight text-[#F5F5F7] min-h-[32px]">
               <ScrambleText text="$1,284,500" trigger={!isLocked} scrambled={isLocked} />
             </h2>
             <div className="flex items-center gap-1 text-[10px] text-[#8B8FE8] mt-1">
@@ -143,7 +143,7 @@ export default function DashboardPage() {
             <Clock className="w-4 h-4 text-[#71717A]/60" />
           </div>
           <div>
-            <h2 className="text-2xl font-normal tracking-wider font-display min-h-[32px]">
+            <h2 className="text-2xl font-semibold font-mono tracking-tight text-[#F5F5F7] min-h-[32px]">
               <ScrambleText text="12" trigger={!isLocked} scrambled={isLocked} speed={50} />
             </h2>
             <p className="text-[10px] text-[#71717A] mt-1">Next batch triggers in 18 mins</p>
@@ -160,7 +160,7 @@ export default function DashboardPage() {
             <Shield className="w-4 h-4 text-[#8B8FE8]/60" />
           </div>
           <div>
-            <h2 className="text-2xl font-normal tracking-wider font-display min-h-[32px]">
+            <h2 className="text-2xl font-semibold font-mono tracking-tight text-[#F5F5F7] min-h-[32px]">
               <ScrambleText text="100%" trigger={!isLocked} scrambled={isLocked} speed={60} />
             </h2>
             <p className="text-[10px] text-[#71717A] mt-1">Active rules intercepting txs</p>
@@ -177,7 +177,7 @@ export default function DashboardPage() {
             <UserCheck className="w-4 h-4 text-[#8B8FE8]/60" />
           </div>
           <div>
-            <h2 className="text-2xl font-normal tracking-wider font-display min-h-[32px] text-[#F5F5F7]">
+            <h2 className="text-2xl font-semibold font-mono tracking-tight text-[#F5F5F7] min-h-[32px]">
               <ScrambleText text="READY" trigger={!isLocked} scrambled={isLocked} speed={70} />
             </h2>
             <p className="text-[10px] text-[#71717A] mt-1">2/3 Shamir Keys Assigned</p>

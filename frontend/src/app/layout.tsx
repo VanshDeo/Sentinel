@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { spaceGrotesk, jetbrainsMono, playfairDisplay } from "@/lib/fonts";
+import { sectorFont, spaceGrotesk, jetbrainsMono, playfairDisplay } from "@/lib/fonts";
 import { LenisProvider } from "@/components/lenis-provider";
 import { Providers } from "@/components/providers";
 import "./globals.css";
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} antialiased`}
+      className={`${sectorFont.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} antialiased`}
     >
       <body className="min-h-screen bg-[#0A0A0B] text-[#F5F5F7]">
         <Providers>

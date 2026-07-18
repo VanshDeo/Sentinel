@@ -131,7 +131,7 @@ export default function TransactionsPage() {
       
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-normal tracking-wider uppercase font-display text-[#F5F5F7]">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
           Transaction Registry
         </h1>
         <p className="text-sm text-[#71717A] mt-1 font-mono">
@@ -214,7 +214,7 @@ export default function TransactionsPage() {
                     </div>
 
                     <div className="flex justify-between items-end mt-4">
-                      <p className="text-sm font-normal tracking-wide font-display text-[#F5F5F7]">{item.amount}</p>
+                      <p className="text-xl font-bold font-mono text-[#F5F5F7]">{item.amount}</p>
                       <span className="text-[9px] text-[#71717A] font-mono">{item.time}</span>
                     </div>
                   </motion.div>
@@ -300,7 +300,7 @@ export default function TransactionsPage() {
 
                 <div className="p-4 bg-[#0E0E10]/30 rounded-xl border border-[rgba(245,245,247,0.03)] space-y-1">
                   <span className="text-[10px] uppercase text-[#71717A] font-mono">Settlement Amount</span>
-                  <p className="text-sm font-semibold text-[#F5F5F7] font-display tracking-wide">{selected.amount}</p>
+                  <p className="text-xl font-bold font-mono text-[#F5F5F7]">{selected.amount}</p>
                 </div>
 
                 <div className="p-4 bg-[#0E0E10]/30 rounded-xl border border-[rgba(245,245,247,0.03)] space-y-1">

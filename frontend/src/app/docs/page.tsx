@@ -20,11 +20,9 @@ function Section({
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
     >
-      <h2
-        className="text-xl font-normal tracking-wider mb-6 pb-3 border-b border-[rgba(245,245,247,0.06)] uppercase text-[#F5F5F7]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
+      <h2 className="text-xl font-semibold tracking-tight mb-6 pb-3 border-b border-[rgba(245,245,247,0.08)] text-[#F5F5F7] flex items-center gap-2.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#8B8FE8]" />
+        <span>{title}</span>
       </h2>
       <div className="space-y-4 text-[#B4B4B9] leading-relaxed text-[15px]">
         {children}
@@ -50,14 +48,14 @@ export default function DocsPage() {
   return (
     <div>
       {/* Page title */}
-      <div className="mb-12">
-        <h1
-          className="text-3xl font-normal mb-3 uppercase tracking-wider text-[#F5F5F7]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+      <div className="mb-12 border-b border-[rgba(245,245,247,0.08)] pb-8">
+        <span className="text-xs uppercase font-mono tracking-widest text-[#8B8FE8] block mb-2 font-medium">
+          Docs & Technical Guides
+        </span>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-[#F5F5F7] mb-3">
           Documentation
         </h1>
-        <p className="text-[#71717A]">
+        <p className="text-[#71717A] text-base">
           Everything you need to integrate Sentinel into your treasury workflow.
         </p>
       </div>

@@ -13,6 +13,8 @@ import { StaggerChildren, staggerChildVariant } from "@/components/motion/stagge
 import { Marquee } from "@/components/marquee";
 import { Button } from "@/components/ui/button";
 import { WobbleCard } from "@/components/ui/wobble-card";
+import { FooterSection } from "@/components/footer-section";
+import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 
 /* ══════════════════════════════════════
    SECTION 1 — HERO
@@ -21,8 +23,9 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-center min-h-screen px-6 overflow-hidden"
+      className="relative flex flex-col items-center justify-center min-h-screen px-6 py-20 overflow-hidden"
     >
+      <BackgroundRippleEffect rows={14} cols={32} cellSize={54} />
       <CircuitGrid />
 
       <div className="relative z-10 flex flex-col items-center gap-8 max-w-3xl text-center">
@@ -97,8 +100,8 @@ function ProblemSection() {
     <section id="problem" className="relative py-32 px-6">
       <div className="max-w-6xl mx-auto">
         <FadeInView className="text-center mb-16">
-          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4">The problem</p>
-          <h2 className="text-3xl md:text-4xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4 font-mono">The problem</p>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-[#F5F5F7]">
             Transparency shouldn&apos;t mean exposure.
           </h2>
         </FadeInView>
@@ -211,11 +214,20 @@ function HowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="relative py-32 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section id="how-it-works" className="relative py-32 px-6 overflow-hidden">
+      <DottedGlowBackground
+        gap={22}
+        radius={1.5}
+        color="rgba(245, 245, 247, 0.2)"
+        glowColor="rgba(139, 143, 232, 0.8)"
+        opacity={0.35}
+        speedMin={0.4}
+        speedMax={1.2}
+      />
+      <div className="relative z-10 max-w-5xl mx-auto">
         <FadeInView className="text-center mb-20">
-          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4">How it works</p>
-          <h2 className="text-3xl md:text-4xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4 font-mono">How it works</p>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-[#F5F5F7]">
             Three steps. Zero exposure.
           </h2>
         </FadeInView>
@@ -272,8 +284,8 @@ function ComparisonSection() {
     <section id="comparison" className="relative py-32 px-6 overflow-hidden">
       <div className="relative z-10 max-w-4xl mx-auto">
         <FadeInView className="text-center mb-16">
-          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4">Why Sentinel</p>
-          <h2 className="text-3xl md:text-4xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4 font-mono">Why Sentinel</p>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-[#F5F5F7]">
             Not just private. Accountable.
           </h2>
         </FadeInView>
@@ -316,15 +328,15 @@ function ComparisonSection() {
    ══════════════════════════════════════ */
 function CTAFooter() {
   return (
-    <footer id="footer" className="relative py-32 px-6 overflow-hidden">
-      <div className="relative z-10 max-w-3xl mx-auto text-center">
-        {/* Watermark logo */}
+    <section id="footer" className="relative pt-24 bg-[#0A0A0B]">
+      {/* CTA Block */}
+      <div className="relative z-10 max-w-3xl mx-auto text-center px-6 pb-20">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <SentinelLogo size={280} opacity={0.04} iconOnly />
+          {/* <SentinelLogo size={280} opacity={0.04} iconOnly /> */}
         </div>
 
         <FadeInView>
-          <h2 className="text-3xl md:text-4xl font-semibold mb-6" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl md:text-5xl font-semibold mb-6 tracking-tight text-[#F5F5F7]">
             Start building with Sentinel.
           </h2>
           <p className="text-[#71717A] mb-10 max-w-md mx-auto">
@@ -333,51 +345,15 @@ function CTAFooter() {
           <Button size="lg" asChild>
             <a href="/dashboard">
               Get started
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 ml-2" />
             </a>
           </Button>
         </FadeInView>
-
-        {/* Footer links */}
-        <div className="mt-20 pt-8 border-t border-[rgba(245,245,247,0.06)]">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-[#71717A]">
-            <a href="/docs" className="hover:text-[#F5F5F7] transition-colors duration-200">
-              Docs
-            </a>
-            <a
-              href="https://github.com/Soujanya-Mctrl/Sentinel"
-              className="hover:text-[#F5F5F7] transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a href="/dashboard" className="hover:text-[#F5F5F7] transition-colors duration-200">
-              Dashboard
-            </a>
-          </div>
-
-          {/* Avalanche badge */}
-          <div className="mt-8 flex items-center justify-center gap-2 text-xs text-[#71717A]">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M11.2 10.4H13.6L8 1.6L5.6 5.76L7.2 8.48L8 7.12L11.2 10.4Z"
-                fill="#E84142"
-              />
-              <path
-                d="M6.4 10.4H2.4L4 7.68L5.6 10.4H6.4Z"
-                fill="#E84142"
-              />
-            </svg>
-            <span>Built on Avalanche</span>
-          </div>
-
-          <p className="mt-6 text-xs text-[#71717A]/60">
-            © 2025 Sentinel. All rights reserved.
-          </p>
-        </div>
       </div>
-    </footer>
+
+      {/* Main Footer with Giant Wordmark, Grid Compartments & Pointer Follower */}
+      <FooterSection />
+    </section>
   );
 }
 
@@ -389,8 +365,8 @@ function ArchitectureSection() {
     <section id="architecture" className="relative py-32 px-6 bg-[#0A0A0B]">
       <div className="max-w-6xl mx-auto">
         <FadeInView className="text-center mb-20">
-          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4">Technical Architecture</p>
-          <h2 className="text-3xl md:text-4xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-sm tracking-widest uppercase text-[#71717A] mb-4 font-mono">Technical Architecture</p>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-[#F5F5F7]">
             Built for execution. Designed for trust.
           </h2>
         </FadeInView>
@@ -402,8 +378,8 @@ function ArchitectureSection() {
               <Cpu className="w-5 h-5" />
             </div>
             <div className="max-w-xl">
-              <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block">01 / eERC Integration</span>
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[#F5F5F7]" style={{ fontFamily: "var(--font-display)" }}>
+              <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block font-mono">01 / eERC Integration</span>
+              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[#F5F5F7] tracking-tight">
                 eERC Wrapped Asset Converter
               </h3>
               <p className="text-sm text-[#71717A] leading-relaxed mb-6">
@@ -412,7 +388,7 @@ function ArchitectureSection() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs border-t border-[rgba(245,245,247,0.06)] pt-6">
                 <div>
-                  <span className="text-[10px] tracking-widest uppercase text-[#71717A] block mb-2 font-semibold">Public On-Chain</span>
+                  <span className="text-[10px] tracking-widest uppercase text-[#71717A] block mb-2 font-semibold font-mono">Public On-Chain</span>
                   <div className="space-y-1.5 font-mono text-[#A1A1AA]">
                     <div className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#71717A]" />
@@ -425,7 +401,7 @@ function ArchitectureSection() {
                   </div>
                 </div>
                 <div>
-                  <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] block mb-2 font-semibold">Encrypted / Private</span>
+                  <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] block mb-2 font-semibold font-mono">Encrypted / Private</span>
                   <div className="space-y-1.5 font-mono text-[#F5F5F7]">
                     <div className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#8B8FE8]" />
@@ -448,8 +424,8 @@ function ArchitectureSection() {
             </div>
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block">02 / Policy Check</span>
-                <h3 className="text-xl font-semibold mb-4 text-[#F5F5F7]" style={{ fontFamily: "var(--font-display)" }}>
+                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block font-mono">02 / Policy Check</span>
+                <h3 className="text-xl font-semibold mb-4 text-[#F5F5F7] tracking-tight">
                   Pre-Settlement Guard
                 </h3>
                 <p className="text-sm text-[#71717A] leading-relaxed pr-8">
@@ -470,8 +446,8 @@ function ArchitectureSection() {
             </div>
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block">03 / Split Custody</span>
-                <h3 className="text-xl font-semibold mb-4 text-[#F5F5F7]" style={{ fontFamily: "var(--font-display)" }}>
+                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block font-mono">03 / Split Custody</span>
+                <h3 className="text-xl font-semibold mb-4 text-[#F5F5F7] tracking-tight">
                   2-of-3 Shamir Splits
                 </h3>
                 <p className="text-sm text-[#71717A] leading-relaxed pr-8">
@@ -492,8 +468,8 @@ function ArchitectureSection() {
             </div>
             <div className="max-w-xl flex flex-col h-full justify-between">
               <div>
-                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block">04 / Batched Settlement</span>
-                <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[#F5F5F7]" style={{ fontFamily: "var(--font-display)" }}>
+                <span className="text-[10px] tracking-widest uppercase text-[#8B8FE8] font-semibold mb-3 block font-mono">04 / Batched Settlement</span>
+                <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[#F5F5F7] tracking-tight">
                   Metadata Anonymity Window
                 </h3>
                 <p className="text-sm text-[#71717A] leading-relaxed mb-6">

@@ -47,7 +47,7 @@ export default function TreasuryPage() {
       
       {/* Header */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-2xl font-normal tracking-wider uppercase font-display text-[#F5F5F7]">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
           Treasury Command Center
         </h1>
         <p className="text-sm text-[#71717A] mt-1 font-mono">

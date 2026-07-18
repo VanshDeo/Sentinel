@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useDashboard, DashboardProvider } from "@/components/dashboard/dashboard-context";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { Wallet, Lock, Unlock } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { DashboardProvider, useDashboard } from "@/components/dashboard/dashboard-context";
+import { Lock, Unlock, Wallet } from "lucide-react";
 import { CircuitGrid } from "@/components/circuit-grid";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 function DashboardTopBar() {
   const { isLocked, setIsLocked } = useDashboard();

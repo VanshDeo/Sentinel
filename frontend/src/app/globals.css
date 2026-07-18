@@ -25,7 +25,7 @@
   --color-success: #00E676;
   --color-warning: #FFB800;
 
-  --font-display: 'Sector 034', var(--font-mono), 'JetBrains Mono', monospace;
+  --font-display: var(--font-display), 'Sector 034', monospace;
   --font-sans: var(--font-sans), 'Space Grotesk', system-ui, sans-serif;
   --font-mono: var(--font-mono), 'JetBrains Mono', 'SF Mono', monospace;
   --font-serif: var(--font-serif), 'Playfair Display', Georgia, serif;
@@ -52,9 +52,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Force headings and display classes to use Sector 034 font explicitly */
-h1, h2, h3, h4, h5, h6, .font-display {
-  font-family: 'Sector 034', var(--font-mono), 'JetBrains Mono', monospace;
+/* Display font utility */
+.font-display {
+  font-family: var(--font-display), 'Sector 034', monospace;
 }
 
 ::selection {
@@ -100,6 +100,33 @@ h1, h2, h3, h4, h5, h6, .font-display {
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(0.92);
+    background-color: rgba(139, 143, 232, 0.4);
+    border-color: rgba(139, 143, 232, 0.8);
+    box-shadow: 0 0 25px 2px rgba(139, 143, 232, 0.6);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+.animate-cell-ripple {
+  animation: cell-ripple var(--duration, 600ms) ease-out var(--delay, 0ms);
 }
 
 @keyframes circuit-drift {

@@ -40,21 +40,18 @@ export function Sidebar() {
       transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 px-4 h-16 border-b border-[rgba(245,245,247,0.06)]">
-        <SentinelLogo size={28} iconOnly />
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.span
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: "auto" }}
-              exit={{ opacity: 0, width: 0 }}
-              className="text-xs font-semibold tracking-[0.25em] text-[#F5F5F7] overflow-hidden whitespace-nowrap uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              SENTINEL
-            </motion.span>
+      <div className="flex items-center gap-3 px-4 h-16 border-b border-[rgba(245,245,247,0.06)] overflow-hidden">
+        <Link href="/" className="flex items-center gap-3">
+          {collapsed ? (
+            <SentinelLogo size={40} iconOnly />
+          ) : (
+            <img
+              src="/logo/logo - horizontal.png"
+              alt="Sentinel Logo"
+              className="h-10 md:h-20 w-auto object-contain"
+            />
           )}
-        </AnimatePresence>
+        </Link>
       </div>
 
       {/* Navigation */}

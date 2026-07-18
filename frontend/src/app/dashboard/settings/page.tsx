@@ -44,7 +44,7 @@ export default function SettingsPage() {
         className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[rgba(245,245,247,0.04)] pb-6"
       >
         <div>
-          <h1 className="text-2xl font-normal tracking-wider uppercase font-display text-[#F5F5F7]">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
             System Settings
           </h1>
           <p className="text-sm text-[#71717A] mt-1 font-mono">
