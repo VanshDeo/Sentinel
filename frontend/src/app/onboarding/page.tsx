@@ -95,11 +95,16 @@ export default function OnboardingPage() {
     const newWs: StoredWorkspace = {
       id: `ws-${Date.now()}`,
       name: finalWsName,
-      accountsCount: selectedAccountIds.length,
+      accountsCount: 0,
       membersCount: teamInvites.filter(t => t.input).length + 1,
       avatarLetter: finalWsName.charAt(0).toUpperCase(),
     };
     saveStoredWorkspace(newWs);
+
+    // Clear previous accounts so new workspace starts with 0 accounts (clean empty state)
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("sentinel_safes");
+    }
 
     toast.success(`Workspace "${finalWsName}" created successfully!`);
     router.push("/workspace");

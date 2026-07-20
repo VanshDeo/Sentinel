@@ -86,7 +86,7 @@ function AccountsPageContent() {
 
   // Create Safe Account Wizard State (1: Basics, 2: Signers, 3: Review - Screenshots 1 & 2)
   const [createSafeStep, setCreateSafeStep] = useState<number | null>(null);
-  const [createSafeName, setCreateSafeName] = useState("Soujanya's Safe");
+  const [createSafeName, setCreateSafeName] = useState("My Account");
   const [selectedNetworks, setSelectedNetworks] = useState<string[]>(["Ethereum"]);
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const [showThresholdDropdown, setShowThresholdDropdown] = useState(false);
@@ -104,22 +104,19 @@ function AccountsPageContent() {
   // Dynamic Signers for Create Safe Step 2 (Matching Screenshots 1 & 2)
   const connectedAddr = address || "0x7e7df9C39CCAeab8D99739fOEBC496e83c77bBEa";
   const [signers, setSigners] = useState<SignerRow[]>([
-    { id: "1", name: "Soujanya", address: connectedAddr },
-    { id: "2", name: "Soujanya2", address: "0xecb87B3b00daADa1725bA46DF3411524f202COC8" },
-    { id: "3", name: "Soujanya3", address: "0x918717e84f6bd07A2fd356c8Dc398bB6A36dDeBD" },
+    { id: "1", name: "Admin Signer", address: connectedAddr },
+    { id: "2", name: "Signer 2", address: "0xecb87B3b00daADa1725bA46DF3411524f202COC8" },
+    { id: "3", name: "Signer 3", address: "0x918717e84f6bd07A2fd356c8Dc398bB6A36dDeBD" },
   ]);
   const [threshold, setThreshold] = useState("2");
 
   // Workspace Wizard States
   const [workspaceName, setWorkspaceName] = useState("");
-  const [selectedSafeIds, setSelectedSafeIds] = useState<string[]>(["safe-1"]);
+  const [selectedSafeIds, setSelectedSafeIds] = useState<string[]>([]);
   const [teamInvites, setTeamInvites] = useState<TeamMemberInvite[]>([
     { id: "1", identifier: "", role: "Member" },
   ]);
-  const [selectedUseCases, setSelectedUseCases] = useState<string[]>([
-    "hold-assets",
-    "operate-protocol",
-  ]);
+  const [selectedUseCases, setSelectedUseCases] = useState<string[]>([]);
 
   useEffect(() => {
     if (searchParams.get("tab") === "workspaces") {
@@ -187,7 +184,7 @@ function AccountsPageContent() {
       ...signers,
       {
         id: Date.now().toString(),
-        name: `Soujanya${nextIdx}`,
+        name: `Signer ${nextIdx}`,
         address: `0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 6)}`,
       },
     ]);
@@ -228,7 +225,7 @@ function AccountsPageContent() {
 
       {/* Top Navigation Header */}
       <header className="relative z-20 w-full h-20 px-8 border-b border-[rgba(245,245,247,0.06)] bg-[#0A0A0B]/80 backdrop-blur-xl flex items-center justify-between">
-        <Link href="/" className="flex items-center">
+        <Link href="/workspace" className="flex items-center">
           <img
             src="/logo/logo - horizontal.png"
             alt="Sentinel Logo"

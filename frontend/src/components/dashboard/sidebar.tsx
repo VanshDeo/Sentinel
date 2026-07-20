@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/workspace", label: "Home", icon: Home },
-  { href: "/accounts", label: "Accounts", icon: Building2 },
+  { href: "/workspace/accounts", label: "Accounts", icon: Building2 },
   { href: "/workspace/members?tab=address-book", label: "Address book", icon: BookOpen },
   { href: "/workspace/transactions", label: "Activity", icon: Activity },
   { href: "/workspace/members", label: "Team", icon: Users },
@@ -54,7 +54,7 @@ function SidebarNavContent() {
     >
       {/* Brand Header */}
       <div className="flex items-center px-4 h-20 border-b border-[rgba(245,245,247,0.06)] overflow-hidden shrink-0">
-        <Link href="/" className="flex items-center w-full">
+        <Link href="/workspace" className="flex items-center w-full">
           {collapsed ? (
             <img
               src="/logo/logo - horizontal.png"
