@@ -61,7 +61,7 @@ function HeroSection() {
           transition={{ delay: 2.0, duration: 0.5 }}
         >
           <Button size="lg" asChild>
-            <a href="/dashboard">
+            <a href="/onboarding">
               Launch app
               <ArrowRight className="w-4 h-4" />
             </a>
@@ -343,7 +343,7 @@ function CTAFooter() {
             Deploy encrypted treasuries with automated compliance and multi-party audit.
           </p>
           <Button size="lg" asChild>
-            <a href="/dashboard">
+            <a href="/onboarding">
               Get started
               <ArrowRight className="w-4 h-4 ml-2" />
             </a>

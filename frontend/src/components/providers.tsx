@@ -1,28 +1,19 @@
 "use client";
 
 import React from "react";
-import { http, createConfig, WagmiProvider } from "wagmi";
-import { mainnet, avalancheFuji } from "wagmi/chains";
-import { injected } from "wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const config = createConfig({
-  chains: [mainnet, avalancheFuji],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [avalancheFuji.id]: http(),
-  },
-});
+import { WalletProvider } from "./wallet-provider";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <WalletProvider>
         {children}
-      </QueryClientProvider>
-    </WagmiProvider>
+        <Toaster position="top-center" theme="dark" richColors />
+      </WalletProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,179 +1,186 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
+  Sliders, 
+  User, 
+  Info, 
+  LogOut, 
+  Pencil, 
+  ExternalLink, 
   Shield, 
   Key, 
-  Sliders, 
-  Save, 
-  Server
+  Server, 
+  SlidersHorizontal,
+  CheckCircle2,
+  Copy,
+  Plus,
+  FileSpreadsheet,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useWallet } from "@/components/wallet-provider";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { type: "tween", ease: "easeOut", duration: 0.4 } }
-} as const;
+import { getStoredSafes } from "@/lib/safe-storage";
 
 export default function SettingsPage() {
-  const [gasLimit, setGasLimit] = useState("25");
-  const [batchTimeout, setBatchTimeout] = useState("30");
-  const [explorerKey, setExplorerKey] = useState("0x4a9b...f8c2");
-  const [notifications, setNotifications] = useState(true);
+  const router = useRouter();
+  const { address, disconnectWallet } = useWallet();
+
+  const [activeTab, setActiveTab] = useState<"setup" | "appearance" | "security" | "notifications" | "modules" | "safeapps" | "data" | "env">("setup");
+
+  const [signers, setSigners] = useState<{ id: string; name: string; address: string }[]>([]);
+
+  useEffect(() => {
+    const safes = getStoredSafes();
+    if (safes.length > 0 && safes[0].signers) {
+      setSigners(safes[0].signers);
+    } else if (address) {
+      setSigners([{ id: "1", name: "Primary Owner", address: address }]);
+    }
+  }, [address]);
 
   return (
-    <motion.div 
-      initial="hidden"
-      animate="show"
-      variants={containerVariants}
-      className="p-8 max-w-6xl mx-auto space-y-8 bg-transparent text-[#F5F5F7] min-h-screen"
-    >
+    <div className="p-8 max-w-7xl mx-auto space-y-8 text-[#F5F5F7] min-h-screen">
       
-      {/* Header */}
-      <motion.div 
-        variants={itemVariants}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[rgba(245,245,247,0.04)] pb-6"
-      >
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#F5F5F7]">
-            System Settings
-          </h1>
-          <p className="text-sm text-[#71717A] mt-1 font-mono">
-            Treasury Configuration, Modules & Interceptor Parameters
-          </p>
-        </div>
-
-        <Button size="default" className="flex items-center gap-2">
-          <Save className="w-4 h-4" />
-          Save Configurations
-        </Button>
-      </motion.div>
-
-      {/* Settings Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Side: General & Safe Config */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* General parameters */}
-          <motion.div 
-            variants={itemVariants}
-            className="p-6 bg-[#111113]/40 backdrop-blur-md rounded-2xl border border-[rgba(245,245,247,0.06)] space-y-4"
+      {/* Settings Sub-Navigation Bar (Matching Screenshot 5) */}
+      <div className="flex items-center gap-6 border-b border-[rgba(245,245,247,0.08)] pb-3 text-xs font-semibold overflow-x-auto font-mono">
+        {[
+          { id: "setup", label: "Setup" },
+          { id: "appearance", label: "Appearance" },
+          { id: "security", label: "Security" },
+          { id: "notifications", label: "Notifications" },
+          { id: "modules", label: "Modules" },
+          { id: "safeapps", label: "Safe Apps" },
+          { id: "data", label: "Data" },
+          { id: "env", label: "Environment variables" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`pb-3 border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+              activeTab === tab.id
+                ? "border-[#8B8FE8] text-[#8B8FE8]"
+                : "border-transparent text-[#71717A] hover:text-[#F5F5F7]"
+            }`}
           >
-            <h2 className="text-xs uppercase tracking-widest text-[#71717A] font-mono flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-[#8B8FE8]" />
-              Batch Execution Limits
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5 text-xs">
-                <label className="text-[10px] text-[#71717A] uppercase font-mono block">Max Settlement Delay (Minutes)</label>
-                <input 
-                  type="number"
-                  value={batchTimeout}
-                  onChange={e => setBatchTimeout(e.target.value)}
-                  className="w-full bg-[#0E0E10]/40 border border-[rgba(245,245,247,0.06)] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] focus:outline-none"
-                />
-              </div>
-
-              <div className="space-y-1.5 text-xs">
-                <label className="text-[10px] text-[#71717A] uppercase font-mono block">Gas Execution Limit (Gwei)</label>
-                <input 
-                  type="number"
-                  value={gasLimit}
-                  onChange={e => setGasLimit(e.target.value)}
-                  className="w-full bg-[#0E0E10]/40 border border-[rgba(245,245,247,0.06)] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] focus:outline-none"
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Block Explorer integration */}
-          <motion.div 
-            variants={itemVariants}
-            className="p-6 bg-[#111113]/40 backdrop-blur-md rounded-2xl border border-[rgba(245,245,247,0.06)] space-y-4"
-          >
-            <h2 className="text-xs uppercase tracking-widest text-[#71717A] font-mono flex items-center gap-2">
-              <Server className="w-4 h-4 text-[#8B8FE8]" />
-              Explorer Integration
-            </h2>
-
-            <div className="space-y-1.5 text-xs">
-              <label className="text-[10px] text-[#71717A] uppercase font-mono block">Avalanche Subnet API Key</label>
-              <input 
-                type="text"
-                value={explorerKey}
-                onChange={e => setExplorerKey(e.target.value)}
-                className="w-full bg-[#0E0E10]/40 border border-[rgba(245,245,247,0.06)] rounded-xl px-3 py-2 text-xs text-[#F5F5F7] focus:outline-none font-mono"
-              />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Right Side: Security & Notifications */}
-        <div className="space-y-6">
-          
-          {/* Notifications setting */}
-          <motion.div 
-            variants={itemVariants}
-            className="p-6 bg-[#111113]/40 backdrop-blur-md rounded-2xl border border-[rgba(245,245,247,0.06)] space-y-4"
-          >
-            <h2 className="text-xs uppercase tracking-widest text-[#71717A] font-mono flex items-center gap-2">
-              <Key className="w-4 h-4 text-[#8B8FE8]" />
-              Security Alerts
-            </h2>
-
-            <div className="flex items-center justify-between py-2 text-xs">
-              <div className="space-y-0.5">
-                <span className="text-xs font-semibold text-[#F5F5F7]">Policy Violation Alerts</span>
-                <p className="text-[10px] text-[#71717A]">Notify lead via email on blocked txs</p>
-              </div>
-              <button 
-                onClick={() => setNotifications(!notifications)}
-                className={`w-9 h-5 rounded-full p-0.5 transition-colors duration-200 focus:outline-none ${
-                  notifications ? "bg-[#8B8FE8]" : "bg-[#71717A]/30"
-                }`}
-              >
-                <div 
-                  className={`w-4 h-4 rounded-full bg-[#F5F5F7] transition-transform duration-200 transform ${
-                    notifications ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Module controls */}
-          <motion.div 
-            variants={itemVariants}
-            className="p-6 bg-[#111113]/40 backdrop-blur-md rounded-2xl border border-[rgba(245,245,247,0.06)] space-y-4"
-          >
-            <h2 className="text-xs uppercase tracking-widest text-[#71717A] font-mono flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#8B8FE8]" />
-              Interceptor Module
-            </h2>
-            <div className="space-y-3">
-              <p className="text-[10px] text-[#71717A] leading-relaxed">
-                Sentinel Module is currently armed and intercepting proposals. Disabling the module returns the Gnosis Safe to default public signature mechanics.
-              </p>
-              <Button size="sm" variant="outline" className="w-full text-xs hover:bg-white/5 hover:text-[#8B8FE8] hover:border-[#8B8FE8]/30">
-                Disable Sentinel Module
-              </Button>
-            </div>
-          </motion.div>
-
-        </div>
-
+            {tab.label}
+          </button>
+        ))}
       </div>
 
-    </motion.div>
+      {/* Main Settings Content */}
+      <div className="space-y-6">
+        
+        {/* SETUP TAB (Matching Screenshot 5) */}
+        {activeTab === "setup" && (
+          <div className="space-y-6">
+            
+            {/* Top 2 Grid Cards: Nonce & Contract Version */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Card 1: Safe Account Nonce */}
+              <div className="p-7 rounded-3xl bg-[#111113]/90 backdrop-blur-2xl border border-[rgba(245,245,247,0.08)] shadow-xl space-y-3">
+                <div className="flex items-center gap-1.5">
+                  <h3 className="text-sm font-bold text-[#F5F5F7]">Safe account nonce</h3>
+                  <Info className="w-3.5 h-3.5 text-[#71717A]" />
+                </div>
+                <p className="text-xs font-mono text-[#71717A]">
+                  Current nonce: <span className="text-[#F5F5F7] font-bold">0</span>
+                </p>
+              </div>
+
+              {/* Card 2: Contract Version */}
+              <div className="p-7 rounded-3xl bg-[#111113]/90 backdrop-blur-2xl border border-[rgba(245,245,247,0.08)] shadow-xl space-y-3">
+                <h3 className="text-sm font-bold text-[#F5F5F7]">Contract version</h3>
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#F5F5F7] font-bold">1.4.1</span>
+                    <span className="px-2 py-0.5 rounded-full bg-[#8B8FE8]/15 text-[#8B8FE8] border border-[#8B8FE8]/30 text-[10px] font-bold flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Latest version
+                    </span>
+                  </div>
+                  <a href="/docs" className="text-[#8B8FE8] hover:underline flex items-center gap-1">
+                    <span>View release</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Card 3: Members & Signers Section (Matching Screenshot 5) */}
+            <div className="p-8 rounded-3xl bg-[#111113]/90 backdrop-blur-2xl border border-[rgba(245,245,247,0.08)] shadow-2xl space-y-6">
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[rgba(245,245,247,0.06)] pb-4">
+                <div>
+                  <h2 className="text-base font-bold text-[#F5F5F7]">Members</h2>
+                </div>
+
+                <button
+                  onClick={() => toast.success("Exported signers CSV")}
+                  className="text-xs font-mono text-[#8B8FE8] hover:underline flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5" />
+                  <span>Export as CSV</span>
+                </button>
+              </div>
+
+              {/* Signers Description */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-bold text-[#F5F5F7]">Signers</h3>
+                <p className="text-xs text-[#71717A] leading-relaxed">
+                  Signers have full control over the account, they can propose, sign and execute transactions, as well as reject them.
+                </p>
+
+                {/* Signers Rows */}
+                <div className="space-y-3 font-mono text-xs pt-2">
+                  {signers.map((s) => (
+                    <div key={s.id} className="p-4 rounded-2xl bg-[#18181B]/80 border border-[rgba(245,245,247,0.06)] flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#8B8FE8] to-[#E84142] flex items-center justify-center text-[9px] font-bold text-white shrink-0">
+                          eth
+                        </div>
+                        <div className="overflow-hidden">
+                          <h4 className="text-xs font-bold text-[#F5F5F7]">{s.name}</h4>
+                          <p className="text-[10px] text-[#71717A] truncate flex items-center gap-1.5">
+                            <span>{s.address}</span>
+                            <Copy className="w-3 h-3 cursor-pointer hover:text-[#8B8FE8]" onClick={() => toast.success("Address copied")} />
+                            <ExternalLink className="w-3 h-3 cursor-pointer hover:text-[#8B8FE8]" />
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Proposers Section */}
+              <div className="space-y-4 pt-4 border-t border-[rgba(245,245,247,0.06)]">
+                <h3 className="text-sm font-bold text-[#F5F5F7]">Proposers</h3>
+                <p className="text-xs text-[#71717A] leading-relaxed">
+                  Proposers can suggest transactions but cannot approve or execute them. Signers should review and approve transactions first.{" "}
+                  <a href="/docs" className="text-[#8B8FE8] underline flex-inline items-center gap-1">
+                    Learn more ↗
+                  </a>
+                </p>
+
+                <button
+                  onClick={() => toast.info("Add proposer modal")}
+                  className="text-xs font-mono text-[#8B8FE8] hover:underline flex items-center gap-1.5 cursor-pointer pt-1"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add proposer</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+      </div>
+    </div>
   );
 }
