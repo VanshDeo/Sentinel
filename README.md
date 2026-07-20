@@ -14,23 +14,23 @@ Sentinel bridges Safe's M-of-N multisig governance with Avalanche's **eERC (Encr
 ## 📐 System Architecture
 
 ```mermaid
-graph TD
-    User[Signers / Wallet] -->|EIP-712 Signatures| SafeProxy[SafeProxy.sol]
-    SafeProxy -->|delegatecall| SafeMasterCopy[Safe.sol Master Copy]
+flowchart TD
+    User["Signers / Wallet"] -->|EIP-712 Signatures| SafeProxy["SafeProxy.sol"]
+    SafeProxy -->|delegatecall| SafeMasterCopy["Safe.sol Master Copy"]
 
-    subgraph Safe Core Modules & Managers
-        SafeMasterCopy --> OwnerManager[OwnerManager.sol\nThreshold M-of-N, unmodified]
-        SafeMasterCopy --> ModuleManager[ModuleManager.sol\nexecTransactionFromModule]
-        SafeMasterCopy --> GuardManager[GuardManager.sol\ncheckTransaction hooks]
-        SafeMasterCopy --> ModuleGuard[ModuleGuard \(Safe v1.5.0+\)\nprevents module bypass of Guards]
+    subgraph SafeCore["Safe Core Modules and Managers"]
+        SafeMasterCopy --> OwnerManager["OwnerManager.sol - Threshold M-of-N, unmodified"]
+        SafeMasterCopy --> ModuleManager["ModuleManager.sol - execTransactionFromModule"]
+        SafeMasterCopy --> GuardManager["GuardManager.sol - checkTransaction hooks"]
+        SafeMasterCopy --> ModuleGuard["ModuleGuard Safe v1.5.0+ - prevents module bypass of Guards"]
     end
 
-    subgraph Sentinel Extension Layer
-        ModuleManager -->|Authorized Module| SentinelModule[SentinelModule.sol]
-        SentinelModule --> PolicyEngine[PolicyEngine.sol\nCap + Velocity Check]
-        SentinelModule --> TreasuryManager[TreasuryManager.sol\nBatch Settlement]
-        TreasuryManager --> eERCAdapter[eERCAdapter.sol\nAvalanche eERC — encrypted balances]
-        PolicyEngine --> AuditRegistry[AuditRegistry.sol\nCommitment + reason log]
+    subgraph SentinelLayer["Sentinel Extension Layer"]
+        ModuleManager -->|Authorized Module| SentinelModule["SentinelModule.sol"]
+        SentinelModule --> PolicyEngine["PolicyEngine.sol - Cap and Velocity Check"]
+        SentinelModule --> TreasuryManager["TreasuryManager.sol - Batch Settlement"]
+        TreasuryManager --> eERCAdapter["eERCAdapter.sol - Avalanche eERC encrypted balances"]
+        PolicyEngine --> AuditRegistry["AuditRegistry.sol - Commitment and reason log"]
     end
 ```
 
@@ -41,26 +41,26 @@ graph TD
 ### 1. Application Structure (Route Groups → Components → State)
 
 ```mermaid
-graph TD
-    Root[app/layout.tsx\nRoot Layout] --> Auth["(auth)/\nWallet-signature login"]
-    Root --> Dashboard["(dashboard)/\nSigner home"]
-    Root --> Policy["(policy)/\nAdmin config"]
-    Root --> Audit["(audit)/\nAuditor viewer"]
+flowchart TD
+    Root["app/layout.tsx - Root Layout"] --> Auth["auth group - Wallet-signature login"]
+    Root --> Dashboard["dashboard group - Signer home"]
+    Root --> Policy["policy group - Admin config"]
+    Root --> Audit["audit group - Auditor viewer"]
 
-    Auth --> ConnectWallet[ConnectWalletButton]
-    Auth --> SIWE[SIWE Signature Flow]
+    Auth --> ConnectWallet["ConnectWalletButton"]
+    Auth --> SIWE["SIWE Signature Flow"]
 
-    Dashboard --> Overview[TreasuryOverview\nBalance, status badge]
-    Dashboard --> ProposalForm[NewProposalForm]
-    Dashboard --> ProposalQueue[ProposalQueue\nPending / Approved / Rejected]
+    Dashboard --> Overview["TreasuryOverview - Balance, status badge"]
+    Dashboard --> ProposalForm["NewProposalForm"]
+    Dashboard --> ProposalQueue["ProposalQueue - Pending / Approved / Rejected"]
 
-    Policy --> PolicyRules[PolicyRulesEditor\nCap + Velocity]
-    Policy --> AllowlistMgr[AllowlistManager]
-    Policy --> NLSetup["NL Policy Setup\n(prose → draft config)"]
+    Policy --> PolicyRules["PolicyRulesEditor - Cap and Velocity"]
+    Policy --> AllowlistMgr["AllowlistManager"]
+    Policy --> NLSetup["NL Policy Setup - prose to draft config"]
 
-    Audit --> ShareSubmit[ShareSubmissionPanel]
-    Audit --> KeyReconstruct[ClientSideReconstruction\nShamirCombine — browser only]
-    Audit --> AuditLedger[DecryptedLedgerView]
+    Audit --> ShareSubmit["ShareSubmissionPanel"]
+    Audit --> KeyReconstruct["ClientSideReconstruction - ShamirCombine in browser"]
+    Audit --> AuditLedger["DecryptedLedgerView"]
 
     style Auth fill:#18181B,stroke:#8B8FE8
     style Dashboard fill:#18181B,stroke:#8B8FE8
@@ -71,32 +71,32 @@ graph TD
 ### 2. State Management Split (TanStack Query vs. Zustand)
 
 ```mermaid
-graph LR
-    subgraph "Server / Chain-Derived State — TanStack Query"
-        Q1[Proposals list]
-        Q2[Policy rules]
-        Q3[Batch settlements]
-        Q4[Encrypted balance ciphertext]
-        Q5[Audit request status]
+flowchart LR
+    subgraph ServerState["Server and Chain-Derived State - TanStack Query"]
+        Q1["Proposals list"]
+        Q2["Policy rules"]
+        Q3["Batch settlements"]
+        Q4["Encrypted balance ciphertext"]
+        Q5["Audit request status"]
     end
 
-    subgraph "Local / Session State — Zustand"
-        Z1[Active wallet address]
-        Z2[Active organization]
-        Z3[Setup wizard step]
-        Z4[Reconstructed key\n— ephemeral, in-memory only, never persisted]
+    subgraph LocalState["Local and Session State - Zustand"]
+        Z1["Active wallet address"]
+        Z2["Active organization"]
+        Z3["Setup wizard step"]
+        Z4["Reconstructed key - ephemeral, in-memory only"]
     end
 
-    subgraph Components
-        C1[ProposalQueue] --> Q1
-        C2[PolicyRulesEditor] --> Q2
-        C3[TreasuryOverview] --> Q3
+    subgraph Components["Components"]
+        C1["ProposalQueue"] --> Q1
+        C2["PolicyRulesEditor"] --> Q2
+        C3["TreasuryOverview"] --> Q3
         C3 --> Q4
-        C4[AuditLedger] --> Q5
+        C4["AuditLedger"] --> Q5
         C4 --> Z4
-        C5[Any component] --> Z1
+        C5["Any component"] --> Z1
         C5 --> Z2
-        C6[SetupWizard] --> Z3
+        C6["SetupWizard"] --> Z3
     end
 
     style Z4 fill:#3A1818,stroke:#E84142
@@ -105,19 +105,19 @@ graph LR
 ### 3. Data Access Layer (Wagmi/Viem vs. REST)
 
 ```mermaid
-graph TD
-    UI[Frontend Components]
+flowchart TD
+    UI["Frontend Components"]
 
-    UI -->|"Wallet connect, signing,\ndirect contract reads"| Wagmi[Wagmi Hooks]
-    Wagmi --> Viem[Viem Client]
-    Viem --> Chain[Avalanche Fuji RPC]
+    UI -->|"Wallet connect, signing, direct contract reads"| Wagmi["Wagmi Hooks"]
+    Wagmi --> Viem["Viem Client"]
+    Viem --> Chain["Avalanche Fuji RPC"]
 
-    UI -->|"Policy config, proposal metadata,\naudit orchestration"| APIClient[REST API Client]
-    APIClient -->|"HTTPS, JWT session"| Backend[Sentinel Backend /api/v1]
+    UI -->|"Policy config, proposal metadata, audit orchestration"| APIClient["REST API Client"]
+    APIClient -->|"HTTPS, JWT session"| Backend["Sentinel Backend /api/v1"]
 
     Chain -.->|"on-chain events"| Backend
 
-    SDK[contracts-sdk package\nTyped ABIs + addresses] --> Wagmi
+    SDK["contracts-sdk package - Typed ABIs and addresses"] --> Wagmi
     SDK --> APIClient
 
     style Chain fill:#18181B,stroke:#8B8FE8
@@ -135,17 +135,15 @@ sequenceDiagram
     participant BE as Backend (coordination only)
     participant SDK as eERC SDK (client-side)
 
-    HolderA->>FE: Submit Shamir share (local input, never transmitted raw)
-    FE->>BE: POST /audit/requests/:id/shares\n(acknowledgment only — "submitted", not the value)
+    HolderA->>FE: Submit Shamir share
+    FE->>BE: POST /audit/requests/:id/shares
     HolderB->>FE: Submit Shamir share
     FE->>BE: POST acknowledgment
     BE-->>FE: threshold met (2 of 3)
-    FE->>FE: ShamirCombine(shareA, shareB) — in-browser only
+    FE->>FE: ShamirCombine(shareA, shareB) - in browser
     FE->>SDK: decrypt(reconstructedKey)
     SDK-->>FE: Plaintext ledger, rendered in AuditLedger
-    FE->>FE: Reconstructed key discarded from memory on unmount
-
-    Note over BE: Backend never sees a share value<br/>or the reconstructed key — only session state
+    FE->>FE: Reconstructed key discarded on unmount
 ```
 
 ### 5. Proposal Lifecycle — Frontend View States
@@ -154,18 +152,18 @@ sequenceDiagram
 stateDiagram-v2
     [*] --> Drafting: NewProposalForm
     Drafting --> Encrypting: Client-side ElGamal + ZK proof
-    Encrypting --> Submitted: proposeTransfer() tx sent
+    Encrypting --> Submitted: proposeTransfer tx sent
     Submitted --> PendingCheck: awaiting Policy Service
 
     PendingCheck --> Rejected: policy fail
     PendingCheck --> ApprovalQueue: policy pass
 
-    Rejected --> [*]: Visible to signer as "not in queue"\n(no reason shown — auditor-only)
+    Rejected --> [*]: Visible to signer as not in queue
 
     ApprovalQueue --> Signing: Safe native N-of-M UI
-    Signing --> Batched: threshold reached, joins pendingBatch[]
-    Batched --> Settled: executeBatch()
-    Settled --> [*]: Visible in TreasuryOverview + AuditLedger (post-reconstruction)
+    Signing --> Batched: threshold reached
+    Batched --> Settled: executeBatch
+    Settled --> [*]: Visible in TreasuryOverview
 ```
 
 ---
