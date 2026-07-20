@@ -44,6 +44,12 @@
     "typescript": "^5",
     "viem": "^2.55.2"
   },
+  "overrides": {
+    "@avalabs/ac-eerc-sdk": {
+      "viem": "$viem",
+      "wagmi": "$wagmi"
+    }
+  },
   "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
   "main": "index.js",
   "repository": {
