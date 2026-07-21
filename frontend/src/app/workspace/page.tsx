@@ -219,7 +219,7 @@ export default function WorkspaceHomePage() {
           {/* 4 Vertical Stacked Action Items (Matching Screenshot 100%) */}
           <div className="space-y-3">
             <button
-              onClick={() => router.push("/workspace/members?tab=address-book")}
+              onClick={() => router.push("/workspace/address-book")}
               className="w-full p-4 rounded-2xl bg-[#18181B] hover:bg-[#202024] border border-[rgba(245,245,247,0.06)] flex items-center justify-between text-left transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-3.5">

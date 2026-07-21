@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/workspace", label: "Home", icon: Home },
   { href: "/workspace/accounts", label: "Accounts", icon: Building2 },
-  { href: "/workspace/members?tab=address-book", label: "Address book", icon: BookOpen },
+  { href: "/workspace/address-book", label: "Address book", icon: BookOpen },
   { href: "/workspace/transactions", label: "Activity", icon: Activity },
   { href: "/workspace/members", label: "Team", icon: Users },
   { href: "/workspace/policies", label: "Security hub", icon: ShieldCheck },
